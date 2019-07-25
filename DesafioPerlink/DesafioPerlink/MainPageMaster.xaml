@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesafioPerlink.MainPageMaster"
+             Title="Master">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" Android="0, 0, 0, 0" />
+    </ContentPage.Padding>
+
+    <StackLayout>
+        <ListView x:Name="MenuItemsListView"
+              HasUnevenRows="true"
+              ItemsSource="{Binding MenuItems}">
+            <ListView.Header>
+                <Grid BackgroundColor="{StaticResource VermelhoSistema}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Source="Logo.jpg" Margin="10" WidthRequest="48" HorizontalOptions="Start"/>
+                    <Label Grid.Row="1" Text="Trinks" TextColor="White" Margin="10,5,5,5" Style="{DynamicResource SubtitleStyle}"/>
+                    <Label Grid.Row="2" Text="Perlink" TextColor="White" Margin="10,0,5,5" Style="{DynamicResource SubtitleStyle}"/>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Margin="0,5,0,5">
+                            <Image Source="{Binding Icon}" WidthRequest="16" />
+                            <Label Margin="5,0,0,0" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Menu}" FontSize="Small"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

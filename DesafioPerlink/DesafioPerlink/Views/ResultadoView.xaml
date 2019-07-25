@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:DesafioPerlink.Services"
+             x:Class="DesafioPerlink.Views.ResultadoView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <c:EnumToDescriptionConverter x:Key="EnumToDescriptionConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Picker ItemsSource="{Binding Resultados}"
+                    HorizontalOptions="FillAndExpand" 
+                    SelectedItem="{Binding ResultadoSelecionado}"
+                    ItemDisplayBinding="{Binding Descricao}"
+                    Title="Resultado"
+                    Margin="5"/>
+
+            <Button Margin="5"
+                    Text="Confirmar" 
+                    TextColor="White" 
+                    BackgroundColor="{StaticResource VermelhoSistema}" 
+                    Command="{Binding ConfirmarCommand}"/>
+
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackLayout IsVisible="{Binding VisualizarSoma}" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                    <Label Text="Valor" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding ValorSoma, StringFormat='{}{0: #,##0.00}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                </StackLayout>
+
+                <StackLayout IsVisible="{Binding VisualizarMedia}" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                    <Label Text="Valor" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding ValorMedia, StringFormat='{}{0: #,##0.00}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                </StackLayout>
+
+                <StackLayout IsVisible="{Binding VisualizarNumeroProcessos}" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                    <Label Text="Total" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding NumeroProcessos}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                </StackLayout>
+
+                <ListView HasUnevenRows="True"
+                          IsVisible="{Binding VisualizarProcessosSetembro2007}"
+                          ItemsSource="{Binding ProcessosSetembro2007}"
+                          VerticalOptions="FillAndExpand"
+                          SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="5" VerticalOptions="Fill">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackLayout Grid.Row="0" Grid.ColumnSpan="3" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Nome" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Cliente.Nome}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Número" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Numero}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Data" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding DataCriacao, StringFormat='{0:dd/MM/yyyy}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="UF" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Estado.UF}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="1" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Status" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Status, Converter={StaticResource EnumToDescriptionConverter}}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Valor" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Valor, StringFormat='{}{0: #,##0.00}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ListView HasUnevenRows="True"
+                          IsVisible="{Binding VisualizarProcessosMesmoEstadoDoCliente}"
+                          ItemsSource="{Binding ProcessosMesmoEstadoDoCliente}"
+                          VerticalOptions="FillAndExpand"
+                          SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="5" VerticalOptions="Fill">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackLayout Grid.Row="0" Grid.ColumnSpan="3" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Nome" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Cliente.Nome}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Número" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Numero}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Data" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding DataCriacao, StringFormat='{0:dd/MM/yyyy}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="UF" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Estado.UF}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="1" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Status" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Status, Converter={StaticResource EnumToDescriptionConverter}}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Valor" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Valor, StringFormat='{}{0: #,##0.00}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ListView HasUnevenRows="True"
+                          IsVisible="{Binding VisualizarProcessosTrab}"
+                          ItemsSource="{Binding ProcessosTrab}"
+                          VerticalOptions="FillAndExpand"
+                          SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="5" VerticalOptions="Fill">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackLayout Grid.Row="0" Grid.ColumnSpan="3" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Nome" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Cliente.Nome}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Número" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Numero}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Data" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding DataCriacao, StringFormat='{0:dd/MM/yyyy}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="UF" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Estado.UF}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="1" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Status" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Status, Converter={StaticResource EnumToDescriptionConverter}}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="2" Grid.Column="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                        <Label Text="Valor" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Valor, StringFormat='{}{0: #,##0.00}'}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

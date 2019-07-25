@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:DesafioPerlink.Services"
+             x:Class="DesafioPerlink.Views.ClienteView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:CNPJToCNPJFormatadoConverter x:Key="CNPJToCNPJFormatadoConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Text="{Binding Nome}" Placeholder="Nome do cliente" HorizontalOptions="FillAndExpand" Margin="5"/>
+
+            <Entry Text="{Binding Cnpj}" Placeholder="CNPJ" MaxLength="14" HorizontalOptions="FillAndExpand" Margin="5"/>
+
+            <Picker ItemsSource="{Binding Estados}"
+                    HorizontalOptions="FillAndExpand" 
+                    SelectedItem="{Binding EstadoSelecionado}"
+                    ItemDisplayBinding="{Binding Nome}"
+                    Title="Estado"
+                    Margin="5"/>
+
+            <Button Text="Confirmar" TextColor="White" Command="{Binding ConfirmarCommand}" BackgroundColor="{StaticResource VermelhoSistema}" Margin="5"/>
+
+            <ListView HasUnevenRows="True"
+                      ItemsSource="{Binding Clientes}"
+                      VerticalOptions="FillAndExpand"
+                      SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5" VerticalOptions="Fill">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                    <Label Text="Nome" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Nome}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                    <Label Text="CNPJ" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Cnpj, Converter={StaticResource CNPJToCNPJFormatadoConverter}}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource LaranjaSistema}" Padding="5" VerticalOptions="FillAndExpand">
+                                    <Label Text="UF" FontAttributes="Bold" TextColor="White" HorizontalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Estado.UF}" TextColor="White" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
